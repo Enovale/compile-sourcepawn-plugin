@@ -1,6 +1,6 @@
 {
-  "name": "compile-sourcemod-plugin",
-  "description": "Compile sourcemod plugins with the latest 1.11/1.12 build",
+  "name": "compile-sourcepawn-plugin",
+  "description": "Compile sourcepawn plugins by using the latest sourcemod build of a selected version",
   "author": "Sheply <76234443+SheplyRam@users.noreply.github.com>",
   "main": "dist/index.js",
   "scripts": {
@@ -12,16 +12,14 @@
   "keywords": [
     "github",
     "actions",
-    "sourcemod",
     "sourcepawn",
     "compile",
     "plugin",
+    "sourcemod",
     "include",
     "inc",
     "smx",
-    "sp",
-    "1.11",
-    "1.12"
+    "sp"
   ],
   "dependencies": {
     "@actions/core": "^1.10.0",

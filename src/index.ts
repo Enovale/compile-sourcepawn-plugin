@@ -1,52 +1,49 @@
+import fs from 'fs/promises'
 import { join as pathJoin } from 'path'
 
-import { addPath, getInput, setFailed } from '@actions/core'
+import { addPath, getInput, setFailed, setOutput } from '@actions/core'
 import { exec } from '@actions/exec'
 import { HttpClient } from '@actions/http-client'
 import { downloadTool, extractTar, extractZip } from '@actions/tool-cache'
 
-type SourcemodVersion = '1.11' | '1.12'
+type FileExtractor = typeof extractTar | typeof extractZip
 
-function isPlatformLinux(): boolean {
-	return process.platform === 'linux'
+type SupportedOS = 'mac' | 'linux' | 'windows'
+type SupportedPlatforms = 'darwin' | 'linux' | 'win32'
+
+function getOS(platform = process.platform): SupportedOS {
+	const platforms: Record<SupportedPlatforms, SupportedOS> = {
+		darwin: 'mac',
+		linux: 'linux',
+		win32: 'windows',
+	}
+
+	if (!Object.keys(platforms).includes(platform)) {
+		throw new Error(`unsupported platform "${platform}"`)
+	}
+
+	return platforms[process.platform as SupportedPlatforms]
 }
 
-function getSourcemodVersion(): SourcemodVersion {
-	const smVersions = ['1.11', '1.12']
+function getSourcemodVersion(): string {
+	const smVersions = ['1.7', '1.8', '1.9', '1.10', '1.11', '1.12']
 
-	const smVersion = getInput('sourcemod') as SourcemodVersion
+	const smVersion = getInput('sourcemod')
 
 	if (!smVersions.includes(smVersion)) {
-		throw new TypeError('sourcemod parameter must bem 1.11 or 1.12')
+		throw new TypeError(`Unsupported Sourcemod version: ${smVersion}`)
 	}
 
 	return smVersion
 }
 
-async function installCompiler(smVersion: SourcemodVersion): Promise<string> {
-	const fetcher = new HttpClient('smdrop')
+async function ensureOutputDir(output: string): Promise<void> {
+	output = output
+		.split('/')
+		.filter(dir => !dir.endsWith('.smx'))
+		.join('/')
 
-	const platformURI = isPlatformLinux()
-		? 'sourcemod-latest-linux'
-		: 'sourcemod-latest-windows'
-
-	const smFileName = await (
-		await fetcher.get(
-			`https://sm.alliedmods.net/smdrop/${smVersion}/${platformURI}`,
-		)
-	).readBody()
-
-	const smFile = await downloadTool(
-		`https://sm.alliedmods.net/smdrop/${smVersion}/${smFileName}`,
-	)
-
-	const extractFiles = isPlatformLinux() ? extractTar : extractZip
-
-	const sourcemod = await extractFiles(smFile)
-
-	addPath(pathJoin(sourcemod, 'addons', 'sourcemod', 'scripting'))
-
-	return pathJoin(sourcemod, 'addons', 'sourcemod')
+	await fs.mkdir(output, { recursive: true })
 }
 
 async function execCommand(...commandParts: string[]): Promise<void> {
@@ -57,6 +54,60 @@ async function execCommand(...commandParts: string[]): Promise<void> {
 	if (exitCode !== 0) {
 		throw new Error(`command exited with ${exitCode}`)
 	}
+}
+
+async function extractFile(file: string): Promise<string> {
+	const extractors: Record<SupportedOS, FileExtractor> = {
+		linux: extractTar,
+		mac: extractZip,
+		windows: extractZip,
+	}
+
+	const extractor = extractors[getOS()]
+
+	return await extractor(file)
+}
+
+async function installCompiler(smVersion: string): Promise<string> {
+	const fetcher = new HttpClient('smdrop')
+
+	const platformURI = `sourcemod-latest-${getOS()}`
+
+	try {
+		const smFileName = await (
+			await fetcher.get(
+				`https://sm.alliedmods.net/smdrop/${smVersion}/${platformURI}`,
+			)
+		).readBody()
+
+		const smFile = await downloadTool(
+			`https://sm.alliedmods.net/smdrop/${smVersion}/${smFileName}`,
+		)
+
+		const sourcemod = await extractFile(smFile)
+
+		addPath(pathJoin(sourcemod, 'addons', 'sourcemod', 'scripting'))
+
+		return pathJoin(sourcemod, 'addons', 'sourcemod')
+	} catch (e) {
+		throw new Error(
+			`Couldn't fetch ${getOS()} version of Sourcemod ${smVersion}`,
+		)
+	}
+}
+
+function use64Comp(): boolean {
+	const supported64Archs = ['arm64', 'ppc64', 's390x', 'x64']
+
+	let useComp64 = getInput('comp64')
+
+	if (useComp64.length === 0) useComp64 = 'true'
+
+	if (!['true', 'false'].includes(useComp64)) {
+		throw new Error(`Unsupported argument for comp64: "${useComp64}"`)
+	}
+
+	return supported64Archs.includes(process.arch) && useComp64 === 'true'
 }
 
 async function run(): Promise<void> {
@@ -76,14 +127,18 @@ async function run(): Promise<void> {
 
 		const sourcemodIncludes = pathJoin(sourcemodPath, 'scripting', 'include')
 
+		await ensureOutputDir(output)
+
 		await execCommand(
-			'spcomp64',
+			use64Comp() ? 'spcomp64' : 'spcomp',
 			input,
 			`-o ${output}`,
 			`-i ${sourcemodIncludes}`,
 			includes,
 			'-O2 -v2',
 		)
+
+		setOutput('result', output)
 	} catch (error) {
 		setFailed(`Action failed: ${(error as Error).message}`)
 	}

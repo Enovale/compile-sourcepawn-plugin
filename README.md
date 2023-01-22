@@ -13,6 +13,7 @@ this action compiles a given input to a given output using the latest release of
 
 **Description**: `path/to/plugin.smx` The path to output your compiled plugin file.
 **Required**: `true`
+**NOTE**: This action WILL create the directory if the folder does not exists
 
 ### sourcemod
 
@@ -60,4 +61,15 @@ this action compiles a given input to a given output using the latest release of
     input: 'my_plugin/scripting/myplugin.sp'
     output: 'my_plugin/plugins/myplugin.smx'
     include: 'my_plugin/scripting/include my_other_plugin/scripting/include'
+```
+
+### Using 32-bits compiler
+
+```yml
+- name: Compile My plugin
+  uses: SheplyRam/compile-sourcemod-plugin@v1
+  with:
+    input: 'scripting/myplugin.sp'
+    output: 'plugins/myplugin.smx'
+    comp64: false
 ```

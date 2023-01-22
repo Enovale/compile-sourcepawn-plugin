@@ -19,6 +19,10 @@ inputs:
     description: 'path/to/include If your plugin has custom includes'
     required: false
     default: ''
+  comp64:
+    description: 'Tells if you want to use 32-bits or 64-bits compiler'
+    required: false
+    default: 'true'
 outputs:
   result:
     description: 'The log output of the compilation'

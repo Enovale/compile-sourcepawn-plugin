@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsup'
 
-export default defineConfig(options => ({
+export default defineConfig({
 	outDir: 'lib',
-	minify: !options.watch,
-}))
+	minify: true,
+})
