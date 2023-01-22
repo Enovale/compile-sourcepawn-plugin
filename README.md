@@ -30,7 +30,7 @@ this action compiles a given input to a given output using the latest release of
 
 ```yml
 - name: Compile My plugin
-  uses: SheplyRam/compile-sourcemod-plugin@v1
+  uses: SheplyRam/compile-sourcemod-plugin@v2
   with:
     sourcemod: '1.12'
     input: 'addons/sourcemod/scripting/myplugin.sp'
