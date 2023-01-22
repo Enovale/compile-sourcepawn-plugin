@@ -1,0 +1,23 @@
+name: 'Compile Sourcemod Plugin'
+description: 'Compiles sourcemod plugins'
+inputs:
+  includes:
+    description: 'Custom include folder path used by the .sp'
+    required: false
+    default: ''
+  input:
+    description: 'The .sp file to compile'
+    required: true
+  output:
+    description: 'The folder to put the .smx file'
+    required: true
+  sourcemod:
+    description: 'The version of sourcemod to use'
+    required: false
+    default: '1.12'
+outputs:
+  result:
+    description: 'The log output of the compilation'
+runs:
+  using: 'node16'
+  main: lib/index.js
