@@ -1,6 +1,5 @@
 {
   "name": "compile-sourcemod-plugin",
-  "version": "0.2.0",
   "description": "Compile sourcemod plugins with the latest 1.11/1.12 build",
   "author": "Sheply <76234443+SheplyRam@users.noreply.github.com>",
   "main": "dist/index.js",
@@ -16,6 +15,11 @@
     "sourcemod",
     "sourcepawn",
     "compile",
+    "plugin",
+    "include",
+    "inc",
+    "smx",
+    "sp",
     "1.11",
     "1.12"
   ],
