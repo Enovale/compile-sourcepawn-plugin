@@ -28,11 +28,36 @@ this action compiles a given input to a given output using the latest release of
 
 ## Example
 
+### Simple use
+
 ```yml
 - name: Compile My plugin
   uses: SheplyRam/compile-sourcemod-plugin@v2
   with:
-    sourcemod: '1.12'
-    input: 'addons/sourcemod/scripting/myplugin.sp'
-    output: 'myplugin.smx'
+    sourcemod: '1.12' # Uses the latest Sourcemod 1.12 Build
+    input: 'addons/sourcemod/scripting/myplugin.sp' # the file is located at <repo_root>/sourcemod/scripting/myplugin.sp
+    output: 'myplugin.smx' # outputs at <repo_root>
+```
+
+### Passing an include path
+
+```yml
+- name: Compile My plugin
+  uses: SheplyRam/compile-sourcemod-plugin@v2
+  with:
+    sourcemod: '1.11'
+    input: 'scripting/myplugin.sp'
+    output: 'plugins/myplugin.smx'
+    include: 'scripting/include'
+```
+
+### Passing more than one include
+
+```yml
+- name: Compile My plugin
+  uses: SheplyRam/compile-sourcemod-plugin@v2
+  with:
+    input: 'my_plugin/scripting/myplugin.sp'
+    output: 'my_plugin/plugins/myplugin.smx'
+    include: 'my_plugin/scripting/include my_other_plugin/scripting/include'
 ```
