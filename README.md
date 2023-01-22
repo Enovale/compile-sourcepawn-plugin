@@ -1,6 +1,6 @@
 # GitHub Compile Sourcemod Plugin Action
 
-this action compiles a given input to a given output using the latest release of the sourcemod (1.11 or 1.12, you choose).
+Compile sourcepawn plugins by using the latest sourcemod build of a selected version
 
 ## Inputs
 
@@ -13,7 +13,7 @@ this action compiles a given input to a given output using the latest release of
 
 **Description**: `path/to/plugin.smx` The path to output your compiled plugin file.
 **Required**: `true`
-**NOTE**: This action WILL create the directory if the folder does not exists
+**NOTE**: This action will attempt to create the directory if the folder does not exists.
 
 ### sourcemod
 
@@ -26,6 +26,11 @@ this action compiles a given input to a given output using the latest release of
 **Description**: `path/to/include`. If your plugin has custom includes, you can target it's path here.
 **Required**: `false`
 
+### comp64
+
+**Description**: If true, it will try to use spcomp64, otherwise it will use normal spcomp
+**Required**: `false`
+**Default**: `true`
 
 ## Example
 
@@ -35,8 +40,8 @@ this action compiles a given input to a given output using the latest release of
 - name: Compile My plugin
   uses: SheplyRam/compile-sourcemod-plugin@v1
   with:
-    sourcemod: '1.12' # Uses the latest Sourcemod 1.12 Build
-    input: 'addons/sourcemod/scripting/myplugin.sp' # the file is located at <repo_root>/sourcemod/scripting/myplugin.sp
+    sourcemod: '1.12' # It will use the latest Sourcemod 1.12 Build
+    input: 'addons/sourcemod/scripting/myplugin.sp' # the <file>.sp is located at <repo_root>/sourcemod/scripting/myplugin.sp
     output: 'myplugin.smx' # outputs at <repo_root>
 ```
 
@@ -71,5 +76,5 @@ this action compiles a given input to a given output using the latest release of
   with:
     input: 'scripting/myplugin.sp'
     output: 'plugins/myplugin.smx'
-    comp64: false
+    comp64: 'false'
 ```
