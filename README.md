@@ -6,31 +6,31 @@ Compile sourcepawn plugins by using the latest sourcemod build of a selected ver
 
 ### input
 
-**Description**: `path/to/plugin.sp` The path to your plugin file.
-**Required**: `true`
+**Description**: `path/to/plugin.sp` The path to your plugin file.<br />
+**Required**: `true`<br />
 
 ### output
 
-**Description**: `path/to/plugin.smx` The path to output your compiled plugin file.
-**Required**: `true`
-**NOTE**: This action will attempt to create the directory if the folder does not exists.
+**Description**: `path/to/plugin.smx` The path to output your compiled plugin file.<br />
+**Required**: `true`<br />
+**NOTE**: This action will attempt to create the directory if the folder does not exists.<br />
 
 ### sourcemod
 
-**Description**: Sourcemod version. It must bem `1.11` or `1.12`
-**Required**: `true`
-**Default**: `1.12`
+**Description**: Sourcemod version. It must bem `1.11` or `1.12`<br />
+**Required**: `true`<br />
+**Default**: `1.12`<br />
 
 ### includes
 
-**Description**: `path/to/include`. If your plugin has custom includes, you can target it's path here.
-**Required**: `false`
+**Description**: `path/to/include`. If your plugin has custom includes, you can target it's path here.<br />
+**Required**: `false`<br />
 
 ### comp64
 
-**Description**: If true, it will try to use spcomp64, otherwise it will use normal spcomp
-**Required**: `false`
-**Default**: `true`
+**Description**: If true, it will try to use spcomp64, otherwise it will use normal spcomp<br />
+**Required**: `false`<br />
+**Default**: `true`<br />
 
 ## Example
 
