@@ -1,4 +1,4 @@
-# GitHub Compile Sourcemod Plugin Action
+# GitHub Action: Compile Sourcepawn Plugin
 
 Compile sourcepawn plugins by using the latest sourcemod build of a selected version
 

@@ -1,5 +1,5 @@
-name: 'Compile Sourcemod Plugin'
-description: 'Compiles sourcemod plugins'
+name: 'Compile Sourcepawn Plugin'
+description: 'Compile sourcepawn plugins by using the latest sourcemod build of a selected version'
 author: 'SheplyRam'
 branding:
   icon: 'package'
