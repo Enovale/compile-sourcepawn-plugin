@@ -32,7 +32,7 @@ this action compiles a given input to a given output using the latest release of
 
 ```yml
 - name: Compile My plugin
-  uses: SheplyRam/compile-sourcemod-plugin@v2
+  uses: SheplyRam/compile-sourcemod-plugin@v1
   with:
     sourcemod: '1.12' # Uses the latest Sourcemod 1.12 Build
     input: 'addons/sourcemod/scripting/myplugin.sp' # the file is located at <repo_root>/sourcemod/scripting/myplugin.sp
@@ -43,7 +43,7 @@ this action compiles a given input to a given output using the latest release of
 
 ```yml
 - name: Compile My plugin
-  uses: SheplyRam/compile-sourcemod-plugin@v2
+  uses: SheplyRam/compile-sourcemod-plugin@v1
   with:
     sourcemod: '1.11'
     input: 'scripting/myplugin.sp'
@@ -55,7 +55,7 @@ this action compiles a given input to a given output using the latest release of
 
 ```yml
 - name: Compile My plugin
-  uses: SheplyRam/compile-sourcemod-plugin@v2
+  uses: SheplyRam/compile-sourcemod-plugin@v1
   with:
     input: 'my_plugin/scripting/myplugin.sp'
     output: 'my_plugin/plugins/myplugin.smx'
