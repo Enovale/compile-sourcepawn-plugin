@@ -17,7 +17,7 @@ Compile sourcepawn plugins by using the latest sourcemod build of a selected ver
 
 ### sourcemod
 
-**Description**: Sourcemod version. It must bem `1.11` or `1.12`<br />
+**Description**: Sourcemod version. It must be `1.7`, `1.8`, `1.9`, `1.10`, `1.11` or `1.12`<br />
 **Required**: `true`<br />
 **Default**: `1.12`<br />
 
