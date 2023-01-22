@@ -1,20 +1,20 @@
 name: 'Compile Sourcemod Plugin'
 description: 'Compiles sourcemod plugins'
 inputs:
-  includes:
-    description: 'Custom include folder path used by the .sp'
-    required: false
-    default: ''
   input:
-    description: 'The .sp file to compile'
+    description: 'path/to/plugin.sp to your plugin file.'
     required: true
   output:
-    description: 'The folder to put the .smx file'
+    description: 'path/to/plugin.smx to output your compiled plugin file.'
     required: true
   sourcemod:
-    description: 'The version of sourcemod to use'
+    description: 'Sourcemod version. It must bem 1.11 or 1.12'
     required: false
     default: '1.12'
+  includes:
+    description: 'path/to/include If your plugin has custom includes'
+    required: false
+    default: ''
 outputs:
   result:
     description: 'The log output of the compilation'

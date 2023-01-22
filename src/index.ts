@@ -14,12 +14,10 @@ function isPlatformLinux(): boolean {
 function getSourcemodVersion(): SourcemodVersion {
 	const smVersions = ['1.11', '1.12']
 
-	const smVersion = getInput('sourcemod', {
-		required: false,
-	}) as SourcemodVersion
+	const smVersion = getInput('sourcemod') as SourcemodVersion
 
 	if (!smVersions.includes(smVersion)) {
-		throw new TypeError('sm_version must bem 1.11 or 1.12')
+		throw new TypeError('sourcemod parameter must bem 1.11 or 1.12')
 	}
 
 	return smVersion
@@ -65,7 +63,7 @@ async function run(): Promise<void> {
 	const input = getInput('input', { required: true })
 	const output = getInput('output', { required: true })
 
-	const includes = getInput('includes', { required: false })
+	const includes = getInput('includes')
 		.split(/\s/g)
 		.filter(Boolean)
 		.map(includePath => `-i ${includePath}`)
