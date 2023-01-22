@@ -1,5 +1,9 @@
 name: 'Compile Sourcemod Plugin'
 description: 'Compiles sourcemod plugins'
+author: 'SheplyRam'
+branding:
+  icon: 'package'
+  color: 'blue'
 inputs:
   input:
     description: 'path/to/plugin.sp to your plugin file.'
