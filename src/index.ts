@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import { join as pathJoin } from 'path'
 
-import { addPath, getInput, setFailed, setOutput } from '@actions/core'
+import { info, addPath, getInput, setFailed, setOutput } from '@actions/core'
 import { exec } from '@actions/exec'
 import { HttpClient } from '@actions/http-client'
 import { downloadTool, extractTar, extractZip } from '@actions/tool-cache'
@@ -87,6 +87,9 @@ async function installCompiler(smVersion: string): Promise<string> {
 		const sourcemod = await extractFile(smFile)
 
 		addPath(pathJoin(sourcemod, 'addons', 'sourcemod', 'scripting'))
+
+		info(pathJoin(sourcemod, 'addons', 'sourcemod', 'scripting'))
+		info(smFile)
 
 		return pathJoin(sourcemod, 'addons', 'sourcemod')
 	} catch (e) {
