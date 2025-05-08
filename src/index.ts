@@ -130,7 +130,7 @@ async function run(): Promise<void> {
 		await ensureOutputDir(output)
 
 		await execCommand(
-			use64Comp() ? 'spcomp64' : 'spcomp',
+			pathJoin(sourcemodPath, 'scripting', use64Comp() ? 'spcomp64' : 'spcomp'),
 			input,
 			`-o ${output}`,
 			`-i ${sourcemodIncludes}`,
